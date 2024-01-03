@@ -1,0 +1,20 @@
+@GetMapping("/events/{clubId}/new")
+public String createEventForm(@PathVariable("clubId")long clubId, Model model){
+        Event event = new Event();
+        model.addAttribute("clubId",clubId);
+        model.addAttribute("event",event);
+        return "events-create";
+EXP:
+@PathVariable("clubId"long clubId) :(always associated with some id)
+-extract values from the URL and bind them to method parameters
+@model.addAttribute("clubId",clubId) :(usually associated with GetMapping)?
+-key value pair where ("thymeleaf key",value)
+-----------------------------------------------------------------------------------------------------
+@PostMapping("/events/{clubId}")
+public String createEvent(@PathVariable("eventId")long eventId, @ModelAttribute("event")EventDto eventDto,Model model){
+        eventService.createEvent(eventId,eventDto);
+        model.addAttribute("events",eventDto);
+        return "redirect:/events/"+eventId;
+EXP:
+@ModelAttribute("event") EventDto eventDto :(usually associated with PostMapping)
+-It is often used to pre-populate form-backing beans or to provide data to be displayed in a view.
